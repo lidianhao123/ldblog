@@ -4,6 +4,8 @@
     <%- partial('artItem', {collection:articles, as:'art'}) %>
   </section>
 </div>
+<% if(pages !== ""){ %>
 <nav class="pagination">
     <%- pages %>
 </nav>
+<% } %>

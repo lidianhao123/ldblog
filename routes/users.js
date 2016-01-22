@@ -10,6 +10,7 @@ var config = require('../config');
 /* 进入登陆页面. */
 router.get('/newuser', function(req, res, next) {
     res.send('success');
+    console.info("1111")
     var user = {
         name: "",
         pass: ""
