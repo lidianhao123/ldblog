@@ -10,10 +10,9 @@ var config = require('../config');
 /* 进入登陆页面. */
 router.get('/newuser', function(req, res, next) {
     res.send('success');
-    console.info("1111")
     var user = {
-        name: "lidian",
-        pass: "www.dainli.com"
+        name: "",
+        pass: ""
     }
     console.info("user.pass = ",user.pass)
     tools.bhash(user.pass, function(err, passhash) {
