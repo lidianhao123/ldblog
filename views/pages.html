@@ -1,0 +1,16 @@
+<nav class="pagination">
+    <% if(pages.page > 1){ %>
+        <a class="extend prev" rel="prev" href="/page/<%= pages.page - 1 %>">
+            <i class="fa fa-angle-left"></i>
+        </a>
+    <% } %>
+    <span class="page-number current"><%= pages.page %></span>
+    <a class="page-number" href="/page/<%= pages.page + 1 %>">pages.page + 1</a>
+    <span class="space">…</span>
+    <a class="page-number" href="/page/<%= pages.total%>"><%= pages.total%></a>
+    <% if(pages.page !== pages.total){ %>
+        <a class="extend next" rel="next" href="/page/<%= pages.page + 1 %>">
+            <i class="fa fa-angle-right"></i>
+        </a>
+    <% } %>
+</nav>

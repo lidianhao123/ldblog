@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <title>TOC - Editor.md examples</title>
+    <!-- <link rel="stylesheet" href="/editor.md/examples/css/style.css" /> -->
+    <link rel="stylesheet" href="/editor.md/css/editormd.css"/>
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+    <style>
+        #layout{width: 1300px; margin: 0 auto;}
+        .title-line{margin: 20px 0; font-size: 18px;}
+        .title-line input{width: 50%; font-size: 18px; font-weight: bold;}
+        .btn-save{float: right; font-size: 18px; cursor: pointer;}
+    </style>
+</head>
+<body>
+    <div id="layout">
+        <div class="title-line">
+            <label for="title">标题：</label>
+            <input type="text" name="title" id="title" value="<% if (typeof(art) !== 'undefined') {%><%= art.title %><%}%>">
+        </div>
+        <div id="test-editormd">
+            <% if (typeof(art) !== 'undefined') {%>
+                <textarea><%= art.md %></textarea>
+            <%}%>
+        </div>
+        <button class="btn-save">保存文章</button>
+    </div>
+        
+    <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+    <script src="/editor.md/editormd.js"></script>   
+    <script type="text/javascript">            
+        var testEditor;
+            
+        $(function() {
+            testEditor = editormd("test-editormd", {
+                width         : "100%",
+                height        : 720,
+                path          : "/editor.md/lib/",
+                saveHTMLToTextarea : true,
+                //toc           : false,         // diable ToC
+                
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "/upload",
+                onload : function() {
+                },
+                tocStartLevel : 2      // Parse beginning of H2, Default value 1
+            });
+            $(".btn-save").on("click", function(){
+                var til = $("#title").val(),
+                    md = testEditor.getMarkdown(),
+                    // html = testEditor.getHTML()
+                    html = $('.editormd-preview').html();
+                if(!til){
+                    alert("请输入标题");
+                } else if(!md && !html){
+                    alert("请输入内容");
+                }else{
+                    $.ajax({
+                        type : "POST",
+                        url  : location.href,
+                        data : {
+                            md    : md,
+                            html  : html,
+                            title : til
+                        },
+                        success : function(data, textStatus){
+                            console.info("data = ", data);
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+    <a class="post-title-link" href="/article/<%= art._id %>" itemprop="url">
+      <%= art.title %>
+    </a>
+    </h1>
+    <div class="post-meta">
+      <span class="post-time">
+      <span class="post-meta-item-icon">
+      <i class="fa fa-calendar-o"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      <time itemprop="dateCreated" datetime="2015-12-25T22:35:47+08:00" content="2015-12-25">
+          <%= art.create_at_ago() %>
+      </time>
+      </span>
+    </div>
+  </header>
+  <div class="markdown-body editormd-preview-container">
+    <%- art.html %>
+    <div class="post-more-link text-center">
+      <a class="btn" href="/article/<%= art._id %>" rel="contents">
+        阅读全文 »
+      </a>
+    </div>
+  </div>
+  <footer class="post-footer">
+    <div class="post-eof">
+    </div>
+  </footer>
+</article>
