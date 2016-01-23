@@ -7,6 +7,7 @@ var auth = require('../middlewares/auth');
 var eventproxy = require('eventproxy');
 var config = require('../config');
 var paginator = require('../common/paginator');
+var navData = require('../middlewares/nav').navData;
 
 /* GET home page. */
 router.get('/', collection);
@@ -43,11 +44,13 @@ try{
 
     proxy.all('arts', 'pages', 
         function(arts, pages){
-            console.info("1111")
+            console.info("navData = ",navData)
             try{
+            navData.curIndex = 0;
             res.render('index.html', {
                 articles : arts,
-                pages    : pages
+                pages    : pages,
+                navData  : navData
             });
             }catch(e){
         console.info(e)
@@ -92,9 +95,11 @@ router.get('/archives/:page', function(req, res, next){
         function(arts, pages){
             console.info("1111")
             try{
+            navData.curIndex = 1;
             res.render('list.html', {
                 articles : arts,
-                pages    : pages
+                pages    : pages,
+                navData  : navData
             });
             }catch(e){
         console.info(e)
@@ -104,6 +109,70 @@ router.get('/archives/:page', function(req, res, next){
     }catch(e){
         console.info(e)
     }
+});
+
+//标签
+router.get('/tags/:page', function(req, res, next){
+    navData.curIndex = 2;
+    res.render('tags.html', {
+        pages    : "",
+        navData  : navData
+    });
+    return;
+    try{
+    console.info("req.query.page = ",req.params.page)
+    var page = parseInt(req.params.page, 10) || 1;
+    page = page > 0 ? page : 1;
+
+    var query = {};
+
+    var proxy = new eventproxy();
+    proxy.fail(next);
+
+    var limit = config.list_topic_count;
+    var options = { skip: (page - 1) * limit, limit: limit, sort: '-top -last_reply_at'};
+
+    article.getArticleByQuery(query, options, proxy.done('arts', function (topics) {
+        return topics;
+    }));
+
+    article.getCountByQuery(query, proxy.done(function (all_topics_count) {
+        var pages = {
+            total: Math.ceil(all_topics_count / limit),
+            current :page
+        }, paginatoHtml = "";
+        if(pages.total > 1){
+            paginatoHtml = paginator(pages)
+        }
+        proxy.emit('pages', paginatoHtml);
+    }));
+
+    proxy.all('arts', 'pages', 
+        function(arts, pages){
+            console.info("1111")
+            try{
+            navData.curIndex = 1;
+            res.render('list.html', {
+                articles : arts,
+                pages    : pages,
+                navData  : navData
+            });
+            }catch(e){
+        console.info(e)
+    }
+        }
+    );
+    }catch(e){
+        console.info(e)
+    }
+});
+//关于
+router.get('/about', function(req, res, next){
+    navData.curIndex = 3;
+    res.render('about.html', {
+        pages    : "",
+        navData  : navData
+    });
 });
 
 //新建文章
