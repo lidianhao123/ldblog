@@ -1,7 +1,7 @@
 {
   "apps" : [{
     // Application #1
-    "name"        : "blog",
+    "name"        : "ldblog",
     "script"      : "./bin/www",
     "env": {
         "NODE_ENV": "production"
