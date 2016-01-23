@@ -1,8 +1,10 @@
 
-config.js
-
 .DS_Store
 
 node_modules
 
 self-file/
+
+./config_pro.js
+
+./run

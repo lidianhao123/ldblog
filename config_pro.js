@@ -4,20 +4,15 @@
 
 var path = require('path');
 
-if(process.env.NODE_ENV === "production"){
-    module.exports = require('./config_pro');
-    return;
-}
-
 var config = {
   // debug 为 true 时，用于本地调试
   debug: true,
 
   get mini_assets() { return !this.debug; }, // 是否启用静态文件的合并压缩，详见视图中的Loader
 
-  name: '', // 社区名字
-  description: '', // 社区的描述
-  keywords: '',
+  name: '全栈开发', // 社区名字
+  description: '个人全栈开发博客，记录前端工程师全栈开发过程中的点滴', // 社区的描述
+  keywords: 'nodejs, node, express',
 
   // 添加到 html head 中的信息
   site_headers: [
@@ -33,7 +28,7 @@ var config = {
   // cdn host，如 http://cnodejs.qiniudn.com
   site_static_host: '', // 静态文件存储域名
   // 社区的域名
-  host: '',
+  host: 'www.dainli.com',
   // 默认的Google tracker ID，自有站点请修改，申请地址：http://www.google.com/analytics/
   google_tracker_id: '',
   // 默认的cnzz tracker ID，自有站点请修改
@@ -41,19 +36,19 @@ var config = {
 
   // mongodb 配置
   db: 'mongodb://127.0.0.1/blog',
-  dbuser: '',
-  dbpass: '',
+  dbuser: 'lidian',
+  dbpass: 'www.dainli.com',
 
   // redis 配置，默认是本地
   redis_host: '127.0.0.1',
-  redis_port: '',
+  redis_port: 6379,
   redis_db: 0,
 
-  session_secret: '', // 务必修改
-  auth_cookie_name: '',
+  session_secret: 'asldkjasidogas24397342', // 务必修改
+  auth_cookie_name: 'klznadasd',
 
   // 程序运行的端口
-  port: 3000,
+  port: 3300,
 
   // 文章列表显示的话题数量
   list_topic_count: 10,
