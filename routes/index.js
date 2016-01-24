@@ -2,12 +2,13 @@ var validator = require('validator');
 var express = require('express');
 var router = express.Router();
 var article = require('../proxy').Article;
+var follow = require('../proxy').Follow;
 var store        = require('../common/store');
 var auth = require('../middlewares/auth');
 var eventproxy = require('eventproxy');
 var config = require('../config');
 var paginator = require('../common/paginator');
-var navData = require('../middlewares/nav').navData;
+var navData = config.site_navs;
 
 /* GET home page. */
 router.get('/', collection);
@@ -39,18 +40,21 @@ try{
         if(pages.total > 1){
             paginatoHtml = paginator(pages)
         }
-        proxy.emit('pages', paginatoHtml);
+        proxy.emit('pages', paginatoHtml, all_topics_count);
+        proxy.emit('count', all_topics_count);
     }));
 
-    proxy.all('arts', 'pages', 
-        function(arts, pages){
+    proxy.all('arts', 'pages', 'count',
+        function(arts, pages, count){
             console.info("navData = ",navData)
+            console.info("count = ",count)
             try{
             navData.curIndex = 0;
             res.render('index.html', {
                 articles : arts,
                 pages    : pages,
-                navData  : navData
+                navData  : navData,
+                allArtNum: count
             });
             }catch(e){
         console.info(e)
@@ -89,17 +93,19 @@ router.get('/archives/:page', function(req, res, next){
             paginatoHtml = paginator(pages)
         }
         proxy.emit('pages', paginatoHtml);
+        proxy.emit('count', all_topics_count);
     }));
 
-    proxy.all('arts', 'pages', 
-        function(arts, pages){
+    proxy.all('arts', 'pages', 'count',
+        function(arts, pages, count){
             console.info("1111")
             try{
             navData.curIndex = 1;
             res.render('list.html', {
                 articles : arts,
                 pages    : pages,
-                navData  : navData
+                navData  : navData,
+                allArtNum: count
             });
             }catch(e){
         console.info(e)
@@ -166,9 +172,45 @@ router.get('/tags/:page', function(req, res, next){
         console.info(e)
     }
 });
+//收藏
+router.get('/follow', function(req, res, next){
+    var proxy = new eventproxy();
+    proxy.fail(next);
+    var options = {sort: '-top -create_at'};
+
+    follow.getFollowByQuery({}, options, proxy.done("follow"));
+
+    proxy.all('follow',
+        function(follows){
+            console.info("follows.length = ",follows.length);
+            navData.curIndex = 3;
+            res.render('follow.html', {
+                pages    : "",
+                follows  : follows,
+                navData  : navData
+            });
+        }
+    );
+});
+//收藏
+router.post('/follow', function(req, res, next){
+    var title = validator.trim(req.body.title),
+        url = validator.trim(req.body.url),
+        folder = validator.trim(req.body.folder),
+        description = validator.trim(req.body.description),
+        remarks = validator.trim(req.body.remarks);
+
+    var proxy = new eventproxy();
+    proxy.fail(next);
+
+    follow.newAndSave(title, url, folder, description, remarks, proxy.done("success", function(fol){
+            res.redirect("/follow");
+        }
+    ));
+});
 //关于
 router.get('/about', function(req, res, next){
-    navData.curIndex = 3;
+    navData.curIndex = 4;
     res.render('about.html', {
         pages    : "",
         navData  : navData
@@ -186,7 +228,8 @@ router.get('/article/:aid', function(req, res, next) {
         if(err){
             return next(err);
         } else{
-            res.render('detail.html', {art: artic});
+            navData.curIndex = 0;
+            res.render('detail.html', {art: artic, navData: navData});
         }
     })
 });

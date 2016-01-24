@@ -6,7 +6,6 @@ moment.locale('zh-cn'); // 使用中文
 // 格式化时间
 exports.formatDate = function (date, type) {
   date = moment(date);
-
   switch(type){
     case 1:
         return date.fromNow();

@@ -1,0 +1,45 @@
+<% layout('layout') -%>
+<div id="content" class="content">
+  <!-- <section id="posts" class="posts-expand">
+    
+  </section> -->
+    <% if (typeof(current_user) !== 'undefined' && current_user) {%> 
+    <form action="" method="post" class="base-form">
+        <div class="form-line">
+            <label for="follow-form-title">名称</label>
+            <input type="text" id="follow-form-title" name="title">
+        </div>
+        <div class="form-line">
+            <label for="follow-form-url">地址</label>
+            <input type="text" id="follow-form-url" name="url">
+        </div>
+        <div class="form-line">
+            <label for="follow-form-folder">文件夹</label>
+            <input type="text" id="follow-form-folder" name="folder">
+        </div>
+        <div class="form-line">
+            <label for="follow-form-description">描述</label>
+            <input type="text" id="follow-form-description" name="description">
+        </div>
+        <div class="form-line">
+            <label for="follow-form-remarks">备注</label>
+            <input type="text" id="follow-form-remarks" name="remarks">
+        </div>
+        <div class="form-line cf">
+            <button type="submit">保存</button>
+        </div>
+    </form>
+    <%}%>
+    <div style="margin-top:20px;">
+    <% follows.forEach(function(fol){ %>
+        <span class="follow-links">
+            <a href="<%= fol.url%>" target="_blank"><%= fol.title%></a>
+        </span>
+    <% }) %>
+    </div>
+</div>
+<% if(pages !== ""){ %>
+<nav class="pagination">
+    <%- pages %>
+</nav>
+<% } %>

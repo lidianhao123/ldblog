@@ -25,11 +25,17 @@ var config = {
   ],
   site_logo: '/public/images/cnodejs_light.svg', // default is `name`
   site_icon: '/public/images/cnode_icon_32.png', // 默认没有 favicon, 这里填写网址
-  // 右上角的导航区
-  site_navs: [
-    // 格式 [ path, title, [target=''] ]
-    [ '/about', '关于' ]
-  ],
+  // 左上角的导航区
+  site_navs: {
+    curIndex:0,
+    items:[
+        {link:"/", name:"首页", className:"fa-home"},
+        {link:"/archives/0", name:"归档", className:"fa-archive"},
+        {link:"/tags/0", name:"标签", className:"fa-tags"},
+        {link:"/about", name:"关于", className:"fa-user"},
+        // {link:"http://www.ixirong.com/404.html", name:"公益404", className:"fa-heartbeat"}
+    ]
+  },
   // cdn host，如 http://cnodejs.qiniudn.com
   site_static_host: '', // 静态文件存储域名
   // 社区的域名

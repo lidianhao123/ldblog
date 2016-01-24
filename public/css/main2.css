@@ -2282,3 +2282,28 @@ body {
     text-align: justify;
   }
 }
+
+.base-form{width: 50%;}
+.base-form .form-line{width:100%; margin-bottom: 10px;}
+.base-form .form-line label{width: 20%; text-align: right; display: inline-block;}
+.base-form .form-line input{width: 70%;}
+.base-form button{float: right;}
+
+.cf{ zoom: 1;}
+.cf:after{ display: table; clear: both; content: '';}
+
+.follow-links {
+  display: inline-block;
+  /*width: 48%;*/
+}
+.follow-links a {
+  box-sizing: border-box;
+  display: block;
+  margin-right: 0;
+  padding: 0 15px;
+  text-decoration: none;
+}
+.follow-links a:hover {
+  border-radius: 4px;
+  background: #eee;
+}

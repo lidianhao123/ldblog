@@ -38,7 +38,7 @@ exports.getArticle = function (id, callback) {
 
 
 /**
- * 根据关键词，获取文章列表列表
+ * 根据关键词，获取文章列表
  * Callback:
  * - err, 数据库错误
  * - count, 文章列表

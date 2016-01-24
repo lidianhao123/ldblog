@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta http-equiv="Cache-Control" content="no-transform"/>
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
-<link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+<!--<link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
 <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css"/>
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css"/>-->
 <link href="/css/main2.css?v=5.0.0" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="/editor.md/css/editormd.css" />
+<link rel="stylesheet" href="/editor.md/css/editormd.min.css" />
 <meta name="keywords" content="Hexo, NexT"/>
 <style type="text/css">
   .editormd-preview-container, .editormd-html-preview {
@@ -91,7 +91,11 @@ var _hmt = _hmt || [];
       <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">
+          <% if (typeof(allArtNum) !== 'undefined' && allArtNum) {%>
+          <%= allArtNum %>
+          <%}%>
+        </span>
         <span class="site-state-item-name">日志</span>
         </a>
       </div>

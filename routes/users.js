@@ -6,6 +6,7 @@ var validator = require('validator');
 var tools = require('../common/tools');
 var authMiddleWare = require('../middlewares/auth');
 var config = require('../config');
+var navData = config.site_navs;
 
 /* 进入登陆页面. */
 router.get('/newuser', function(req, res, next) {
@@ -24,7 +25,8 @@ router.get('/newuser', function(req, res, next) {
 /* 进入登陆页面. */
 router.get('/login', function(req, res, next) {
     //创建用户代码：
-    res.render('login');
+    navData.curIndex = 0;
+    res.render('login',{navData: navData});
 });
 
 router.post('/login', function(req, res, next) {

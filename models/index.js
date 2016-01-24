@@ -15,6 +15,8 @@ mongoose.connect(config.db, {
 // models
 require('./user');
 require('./article');
+require('./follow');
 
-exports.User         = mongoose.model('User');
-exports.Article        = mongoose.model('Article');
+exports.User      = mongoose.model('User');
+exports.Article   = mongoose.model('Article');
+exports.Follow    = mongoose.model('Follow');
