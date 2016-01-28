@@ -11,7 +11,10 @@
 <link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css"/>-->
 <link href="/css/main2.css?v=5.0.0" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="/editor.md/css/editormd.min.css" />
-<meta name="keywords" content="Hexo, NexT"/>
+
+<meta name='description' content='<%= config.description %>'>
+<meta name="keywords" content="<%= config.keywords %>"/>
+
 <style type="text/css">
   .editormd-preview-container, .editormd-html-preview {
      padding: 0; 
@@ -24,7 +27,11 @@
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description">
-<title>lidianhao</title>
+<% if (typeof(art) !== 'undefined' && art.title) {%>
+  <title>lidianhao,<%= art.title %></title>
+<%} else{%>
+  <title>lidianhao</title>
+<%}%>
 <script>
 var _hmt = _hmt || [];
 (function() {

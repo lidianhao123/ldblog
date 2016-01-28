@@ -52,6 +52,8 @@
                     md = testEditor.getMarkdown(),
                     // html = testEditor.getHTML()
                     html = $('.editormd-preview').html();
+                    // introduce = $('.editormd-preview blockquote:eq(0)').prop("outerHTML");
+                    introduce = $('.editormd-preview blockquote:eq(0)').html();
                 if(!til){
                     alert("请输入标题");
                 } else if(!md && !html){
@@ -63,7 +65,8 @@
                         data : {
                             md    : md,
                             html  : html,
-                            title : til
+                            title : til,
+                            introduce : introduce
                         },
                         success : function(data, textStatus){
                             console.info("data = ", data);

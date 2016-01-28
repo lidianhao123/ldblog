@@ -2294,6 +2294,7 @@ body {
 
 .follow-links {
   display: inline-block;
+  position: relative;
   /*width: 48%;*/
 }
 .follow-links a {
@@ -2306,4 +2307,13 @@ body {
 .follow-links a:hover {
   border-radius: 4px;
   background: #eee;
+}
+.follow-links .fa-times{
+  position: absolute;
+  display: none;
+  right: -6px;
+  top: -7px;
+}
+.follow-links:hover .fa-times{
+  display: block;
 }

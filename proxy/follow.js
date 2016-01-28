@@ -55,3 +55,21 @@ exports.getFollowByQuery = function (query, opt, callback) {
 exports.getCountByQuery = function (query, callback) {
   Follow.count(query, callback);
 };
+
+/**
+ * 根据收藏ID，将对应项目deleted
+ * Callback:
+ * - err, 数据库异常
+ * - user, 用户
+ * @param {String} followId 收藏项ID
+ * @param {Function} callback 回调函数
+ */
+exports.getDeleteById = function (followId, callback) {
+  Follow.findOne({_id: followId}, function (err, fol) {
+    if (err || !fol) {
+      return callback(err);
+    }
+    fol.deleted    = true;
+    fol.save(callback);
+  });
+};

@@ -9,6 +9,7 @@ var ArticleSchema = new Schema({
   title: { type: String },
   md: { type: String },
   html: { type: String },
+  introduce: {type: String},
   author_id: { type: ObjectId },
   top: { type: Boolean, default: false }, // 置顶帖
   good: {type: Boolean, default: false}, // 精华帖

@@ -8,6 +8,7 @@ var FollowSchema = new Schema({
   remarks: {type: String},
   url: {type: String},
   folder: {type: String},
+  deleted: {type: Boolean, default: false},
   
   create_at: { type: Date, default: Date.now },
   update_at: { type: Date, default: Date.now },

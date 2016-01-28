@@ -178,7 +178,7 @@ router.get('/follow', function(req, res, next){
     proxy.fail(next);
     var options = {sort: '-top -create_at'};
 
-    follow.getFollowByQuery({}, options, proxy.done("follow"));
+    follow.getFollowByQuery({deleted:false}, options, proxy.done("follow"));
 
     proxy.all('follow',
         function(follows){
@@ -191,6 +191,16 @@ router.get('/follow', function(req, res, next){
             });
         }
     );
+});
+//删除
+router.get('/follow/delete/:id', function(req, res, next){
+    follow.getDeleteById(req.params.id, function(err, fol){
+        if(err){
+            return next(err);
+        } else{
+            res.redirect("/follow");
+        }
+    })
 });
 //收藏
 router.post('/follow', function(req, res, next){
@@ -252,8 +262,9 @@ router.post('/article/create', auth.userRequired, function(req, res, next) {
     var md = validator.trim(req.body.md),
         html = validator.trim(req.body.html),
         title = validator.trim(req.body.title);
+        introduce = validator.trim(req.body.introduce);
 
-    article.newAndSave(title, md, html, function(err, article){
+    article.newAndSave(title, md, html, introduce, function(err, article){
         if(err){
             // var result = {
             //     code      : 500,
@@ -277,6 +288,7 @@ router.post('/article/:aid/edit', auth.userRequired, function(req, res, next) {
         md = req.body.md,
         html = req.body.html,
         title = validator.trim(req.body.title);
+        introduce = validator.trim(req.body.introduce);
 
     article.getArticle(aid, function(err, artic){
         if(err){
@@ -286,6 +298,7 @@ router.post('/article/:aid/edit', auth.userRequired, function(req, res, next) {
             artic.md = md;
             artic.html = html;
             artic.title = title;
+            artic.introduce = introduce;
             artic.update_at = new Date();
 
             artic.save(function(err){
