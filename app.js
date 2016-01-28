@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var busboy = require('connect-busboy');
+var compress = require('compression');  //开启gzip压缩中间件
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.session_secret));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(compress());
 app.use(session({
   secret: config.session_secret,
   store: new RedisStore({
