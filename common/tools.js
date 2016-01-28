@@ -16,6 +16,9 @@ exports.formatDate = function (date, type) {
     case 3:
         return date.format('MM-DD');
     break;
+    case 4:
+        return date.format('YYYY');
+    break;
     default:
         date.fromNow();
     break

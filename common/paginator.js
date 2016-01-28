@@ -10,7 +10,7 @@ function paginatorHelper(options){
   var midSize = options.hasOwnProperty('mid_size') ? +options.mid_size : 2;
   var space = options.hasOwnProperty('space') ? options.space : '&hellip;';
   var base = options.base || '';
-  // var format = options.format || this.config.pagination_dir + '/%d/';
+  var format = options.format || '/%d/';
   var prevText = options.prev_text || '<';
   var nextText = options.next_text || '>';
   var prevNext = options.hasOwnProperty('prev_next') ? options.prev_next : true;
@@ -27,7 +27,8 @@ function paginatorHelper(options){
 
   function link(i){
     // return self.url_for(i === 1 ? base : base + format.replace('%d', i));
-    return '/page/'+i;
+    return format.replace('%d', i)
+     // '/page/'+i;
   }
 
   function pageLink(i){

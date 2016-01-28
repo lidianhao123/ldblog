@@ -3,7 +3,8 @@ var express = require('express');
 var router = express.Router();
 var article = require('../proxy').Article;
 var follow = require('../proxy').Follow;
-var store        = require('../common/store');
+var store  = require('../common/store');
+var tools = require('../common/tools');
 var auth = require('../middlewares/auth');
 var eventproxy = require('eventproxy');
 var config = require('../config');
@@ -15,8 +16,6 @@ router.get('/', collection);
 router.get('/page/:page', collection);
 
 function collection(req, res, next) {
-try{
-    console.info("req.query.page = ",req.params.page)
     var page = parseInt(req.params.page, 10) || 1;
     page = page > 0 ? page : 1;
 
@@ -33,9 +32,10 @@ try{
     }));
 
     article.getCountByQuery(query, proxy.done(function (all_topics_count) {
-        var pages = {
-            total: Math.ceil(all_topics_count / limit),
-            current :page
+         var pages = {
+            total   :  Math.ceil(all_topics_count / limit),
+            current :  page,
+            format  :  "/page/%d"
         }, paginatoHtml = "";
         if(pages.total > 1){
             paginatoHtml = paginator(pages)
@@ -46,9 +46,6 @@ try{
 
     proxy.all('arts', 'pages', 'count',
         function(arts, pages, count){
-            console.info("navData = ",navData)
-            console.info("count = ",count)
-            try{
             navData.curIndex = 0;
             res.render('index.html', {
                 articles : arts,
@@ -56,19 +53,11 @@ try{
                 navData  : navData,
                 allArtNum: count
             });
-            }catch(e){
-        console.info(e)
-    }
         }
     );
-    }catch(e){
-        console.info(e)
-    }
 }
 
 router.get('/archives/:page', function(req, res, next){
-    try{
-    console.info("req.query.page = ",req.params.page)
     var page = parseInt(req.params.page, 10) || 1;
     page = page > 0 ? page : 1;
 
@@ -80,14 +69,28 @@ router.get('/archives/:page', function(req, res, next){
     var limit = config.list_topic_count;
     var options = { skip: (page - 1) * limit, limit: limit, sort: '-top -last_reply_at'};
 
-    article.getArticleByQuery(query, options, proxy.done('arts', function (topics) {
-        return topics;
+    article.getArticleByQuery(query, options, proxy.done('arts', function (arts) {
+        var Arr = [], i = 1, old = null, len = arts.length;
+
+        old = tools.formatDate(arts[0].last_reply_at, 4);
+        Arr.push(old);
+        Arr.push(arts[0]);
+        for(; i < len; i++){
+            var year = tools.formatDate(arts[i].last_reply_at, 4);
+            if(old !== year){
+                Arr.push(year);
+                old = year;
+            }
+            Arr.push(arts[i]);
+        }
+        return Arr;
     }));
 
     article.getCountByQuery(query, proxy.done(function (all_topics_count) {
         var pages = {
-            total: Math.ceil(all_topics_count / limit),
-            current :page
+            total   :  Math.ceil(all_topics_count / limit),
+            current :  page,
+            format  :  "/archives/%d"
         }, paginatoHtml = "";
         if(pages.total > 1){
             paginatoHtml = paginator(pages)
@@ -98,8 +101,6 @@ router.get('/archives/:page', function(req, res, next){
 
     proxy.all('arts', 'pages', 'count',
         function(arts, pages, count){
-            console.info("1111")
-            try{
             navData.curIndex = 1;
             res.render('list.html', {
                 articles : arts,
@@ -107,14 +108,8 @@ router.get('/archives/:page', function(req, res, next){
                 navData  : navData,
                 allArtNum: count
             });
-            }catch(e){
-        console.info(e)
-    }
         }
     );
-    }catch(e){
-        console.info(e)
-    }
 });
 
 //标签
@@ -143,9 +138,10 @@ router.get('/tags/:page', function(req, res, next){
     }));
 
     article.getCountByQuery(query, proxy.done(function (all_topics_count) {
-        var pages = {
-            total: Math.ceil(all_topics_count / limit),
-            current :page
+         var pages = {
+            total   :  Math.ceil(all_topics_count / limit),
+            current :  page,
+            format  :  "/tags/%d"
         }, paginatoHtml = "";
         if(pages.total > 1){
             paginatoHtml = paginator(pages)
