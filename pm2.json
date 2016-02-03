@@ -8,6 +8,5 @@
     },
     "error_file"  : "./logs/blog_error.log",
     "out_file"    : "./logs/blog_out.log",
-    "pid_file"    : "./PM2/pids/blog_pid.pid",
   }]
 }
