@@ -189,7 +189,7 @@ router.get('/follow', function(req, res, next){
     );
 });
 //删除
-router.get('/follow/delete/:id', function(req, res, next){
+router.get('/follow/delete/:id', auth.userRequired, function(req, res, next){
     follow.getDeleteById(req.params.id, function(err, fol){
         if(err){
             return next(err);
