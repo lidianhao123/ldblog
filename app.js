@@ -17,6 +17,7 @@ var _ = require('lodash');
 
 var app = express();
 
+app.use(compress());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -31,7 +32,6 @@ app.use(bodyParser.urlencoded({ extended: false ,limit:'1000kb'}));
 app.use(cookieParser(config.session_secret));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(compress());
 app.use(session({
   secret: config.session_secret,
   store: new RedisStore({
