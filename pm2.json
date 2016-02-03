@@ -6,8 +6,8 @@
     "env": {
         "NODE_ENV": "production"
     },
-    "error_file"  : "/home/blog/logs/blog_error.log",
-    "out_file"    : "/home/blog/logs/blog_out.log",
-    "pid_file"    : "/home/blog/PM2/pids/blog_pid.pid",
+    "error_file"  : "./logs/blog_error.log",
+    "out_file"    : "./blog/logs/blog_out.log",
+    "pid_file"    : "./blog/PM2/pids/blog_pid.pid",
   }]
 }
