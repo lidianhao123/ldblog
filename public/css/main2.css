@@ -1000,6 +1000,7 @@ body {
   text-align: center;
 }
 .sidebar-toggle {
+  display: none;
   position: fixed;
   right: 50px;
   bottom: 45px;
