@@ -8,8 +8,9 @@
 <meta http-equiv="Cache-Control" content="no-transform"/>
 <!-- 百度siteapp 禁止网页转码 -->
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
-<link href="/css/main2.css?v=5.0.0" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="/editor.md/css/editormd.min.css" />
+
+<link rel="stylesheet" href="/css/main2.css"/>
+<link rel="stylesheet" href="/editor.md/css/editormd.min.css"/>
 <meta name='description' content='<%= config.description %>'>
 <meta name="keywords" content="<%= config.keywords %>"/>
 <style type="text/css">
@@ -18,11 +19,11 @@
   }
 </style>
 <meta name="description">
-<meta property="og:type" content="website">
+<!-- <meta property="og:type" content="website">
 <meta property="og:title" content="lidianhao">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="lidianhao">
-<meta property="og:description">
+<meta property="og:description"> -->
 <% if (typeof(art) !== 'undefined' && art.title) {%>
   <title>全栈网,<%= art.title %></title>
 <%} else{%>
@@ -38,35 +39,38 @@ var _hmt = _hmt || [];
 })();
 </script>
 </head>
-<body lang="zh-Hans">
-<div class="container one-collumn sidebar-position-left page-home ">
+<body>
+<div class="container">
+  <!-- 顶部黑线条 start -->
   <div class="headband">
   </div>
+  <!-- 顶部黑线条 end -->
+  <!--  -->
   <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-  <div class="header-inner">
-    <div class="site-meta ">
-      <div class="custom-logo-site-title">
-        <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">全栈网</span>
-        <span class="logo-line-after"><i></i></span>
-        </a>
+    <div class="header-inner">
+      <div class="site-meta ">
+        <div class="custom-logo-site-title">
+          <a href="/" class="brand" rel="start">
+          <span class="logo-line-before"><i></i></span>
+          <span class="site-title" style="opacity: 1; top: 0px;">全栈网</span>
+          <span class="logo-line-after"><i></i></span>
+          </a>
+        </div>
+        <p class="site-subtitle">
+          <% if (typeof(current_user) !== 'undefined' && current_user) {%>
+            <%= current_user.name %>
+          <%}%>  
+        </p>
       </div>
-      <p class="site-subtitle">
-        <% if (typeof(current_user) !== 'undefined' && current_user) {%>
-          <%= current_user.name %>
-        <%}%>  
-      </p>
+      <div class="site-nav-toggle">
+        <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        </button>
+      </div>
+      <% include nav.html %>
     </div>
-    <div class="site-nav-toggle">
-      <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      </button>
-    </div>
-    <% include nav.html %>
-  </div>
   </header>
   <main id="main" class="main">
   <div class="main-inner">
@@ -128,29 +132,34 @@ var _hmt = _hmt || [];
     </aside>
   </div>
   </main>
+  <!-- footer start -->
   <footer id="footer" class="footer">
-  <div class="footer-inner">
-    <div class="copyright">
-      &copy; 
-      <span itemprop="copyrightYear">2016</span>
-      <span class="with-love">
-      <i class="icon-next-heart fa fa-heart"></i>
-      </span>
-      <span class="author" itemprop="copyrightHolder">Dian Li</span>
+    <div class="footer-inner">
+      <div class="copyright">
+        &copy; 
+        <span itemprop="copyrightYear">2016</span>
+        <span class="with-love">
+        <i class="icon-next-heart fa fa-heart"></i>
+        </span>
+        <span class="author" itemprop="copyrightHolder">Dian Li</span>
+      </div>
+      <div class="powered-by"> 
+        <a class="theme-link" target="_blank" href="http://tjcainfo.miitbeian.gov.cn/state/outPortal/loginPortal.action">津ICP备15008881号-1</a>
+      </div>
+      <div class="theme-info">
+        主题 -
+        <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+          NexT.Pisces
+        </a>
+      </div>
     </div>
-    <div class="powered-by"> 
-      <a class="theme-link" target="_blank" href="http://tjcainfo.miitbeian.gov.cn/state/outPortal/loginPortal.action">津ICP备15008881号-1</a>
-    </div>
-    <div class="theme-info">
-      主题 -
-      <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
-        NexT.Pisces
-      </a>
-    </div>
-  </div>
   </footer>
+  <!-- footer end -->
+
+  <!-- 返回顶部 start -->
   <div class="back-to-top">
   </div>
+  <!-- 返回顶部 end -->
 </div>
 
 <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
