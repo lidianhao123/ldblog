@@ -33,7 +33,7 @@
     <div style="margin-top:20px;">
     <% follows.forEach(function(fol){ %>
         <span class="follow-links">
-            <a href="<%= fol.url%>" target="_self"><%= fol.title%></a>
+            <a href="<%= fol.url%>" target="_blank"><%= fol.title%></a>
             <a href="/follow/delete/<%= fol._id%>"><i class="fa fa-times"></i></a>
         </span>
     <% }) %>

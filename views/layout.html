@@ -9,7 +9,7 @@
 <!-- 百度siteapp 禁止网页转码 -->
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
-<link rel="stylesheet" href="/css/main2.css"/>
+<link rel="stylesheet" href="/css/main4.css"/>
 <link rel="stylesheet" href="/editor.md/css/editormd.min.css"/>
 <meta name='description' content='<%= config.description %>'>
 <meta name="keywords" content="<%= config.keywords %>"/>
@@ -87,15 +87,15 @@ var _hmt = _hmt || [];
     <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
       <section class="site-overview sidebar-panel sidebar-panel-active ">
-      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <div class="site-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
         <img class="site-author-image" itemprop="image" width="70" height="70" src="/avater.jpeg" alt="Dian Li"/>
         <p class="site-author-name" itemprop="name">
           钿哥
         </p>
-        <p class="site-description motion-element" itemprop="description">
+        <p class="site-description" itemprop="description">
         </p>
       </div>
-      <nav class="site-state motion-element">
+      <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
         <span class="site-state-item-count">
@@ -117,14 +117,24 @@ var _hmt = _hmt || [];
         </a>
       </div>
       </nav>
-      <div class="links-of-author motion-element">
-      </div>
-      <div class="links-of-author motion-element">
-        <p class="site-author-name">
+      <div class="feed-link motion-element">
+        <a href="/atom.xml" rel="alternate">
+          <i class="fa fa-rss"></i>
           Links
-        </p>
+        </a>
+      </div>
+      <div class="links-of-author">
         <span class="links-of-author-item">
-        <a href="http://study.ahthw.com/" target="_blank">村长很忙</a>
+          <a href="http://study.ahthw.com/" target="_blank">村长很忙</a>
+        </span>
+        <span class="links-of-author-item">
+          <a href="http://study.ahthw.com/" target="_blank">村长很忙</a>
+        </span>
+        <span class="links-of-author-item">
+          <a href="http://study.ahthw.com/" target="_blank">村长很忙</a>
+        </span>
+        <span class="links-of-author-item">
+          <a href="http://study.ahthw.com/" target="_blank">村长很忙</a>
         </span>
       </div>
       </section>
@@ -136,6 +146,9 @@ var _hmt = _hmt || [];
   <footer id="footer" class="footer">
     <div class="footer-inner">
       <div class="copyright">
+        <div class="powered-by"> 
+          <a class="theme-link" target="_blank" href="http://tjcainfo.miitbeian.gov.cn/state/outPortal/loginPortal.action">津ICP备15008881号-1</a>
+        </div>
         &copy; 
         <span itemprop="copyrightYear">2016</span>
         <span class="with-love">
@@ -143,15 +156,13 @@ var _hmt = _hmt || [];
         </span>
         <span class="author" itemprop="copyrightHolder">Dian Li</span>
       </div>
-      <div class="powered-by"> 
-        <a class="theme-link" target="_blank" href="http://tjcainfo.miitbeian.gov.cn/state/outPortal/loginPortal.action">津ICP备15008881号-1</a>
-      </div>
-      <div class="theme-info">
+      
+      <!-- <div class="theme-info">
         主题 -
         <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
           NexT.Pisces
         </a>
-      </div>
+      </div> -->
     </div>
   </footer>
   <!-- footer end -->
