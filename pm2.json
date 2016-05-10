@@ -6,7 +6,7 @@
     "env": {
         "NODE_ENV": "production"
     },
-    "error_file"  : "./logs/blog_error.log",
-    "out_file"    : "./logs/blog_out.log",
+    // "error_file"  : "./logs/blog_error.log",
+    // "out_file"    : "./logs/blog_out.log",
   }]
 }
