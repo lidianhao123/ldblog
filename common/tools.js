@@ -36,3 +36,7 @@ exports.bhash = function (str, callback) {
 exports.bcompare = function (str, hash, callback) {
   bcrypt.compare(str, hash, callback);
 };
+//返回数组随机值
+exports.random = function (arr) {
+  return arr[Math.floor(Math.random()*arr.length)];
+}

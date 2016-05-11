@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var article = require('../proxy').Article;
 var follow = require('../proxy').Follow;
+var tags = require('../proxy').Tags;
 var store  = require('../common/store');
 var tools = require('../common/tools');
 var auth = require('../middlewares/auth');
@@ -112,63 +113,7 @@ router.get('/archives/:page', function(req, res, next){
     );
 });
 
-//标签
-router.get('/tags/:page', function(req, res, next){
-    navData.curIndex = 2;
-    res.render('tags.html', {
-        pages    : "",
-        navData  : navData
-    });
-    return;
-    try{
-    console.info("req.query.page = ",req.params.page)
-    var page = parseInt(req.params.page, 10) || 1;
-    page = page > 0 ? page : 1;
-
-    var query = {};
-
-    var proxy = new eventproxy();
-    proxy.fail(next);
-
-    var limit = config.list_topic_count;
-    var options = { skip: (page - 1) * limit, limit: limit, sort: '-top -last_reply_at'};
-
-    article.getArticleByQuery(query, options, proxy.done('arts', function (topics) {
-        return topics;
-    }));
-
-    article.getCountByQuery(query, proxy.done(function (all_topics_count) {
-         var pages = {
-            total   :  Math.ceil(all_topics_count / limit),
-            current :  page,
-            format  :  "/tags/%d"
-        }, paginatoHtml = "";
-        if(pages.total > 1){
-            paginatoHtml = paginator(pages)
-        }
-        proxy.emit('pages', paginatoHtml);
-    }));
-
-    proxy.all('arts', 'pages', 
-        function(arts, pages){
-            console.info("1111")
-            try{
-            navData.curIndex = 1;
-            res.render('list.html', {
-                articles : arts,
-                pages    : pages,
-                navData  : navData
-            });
-            }catch(e){
-        console.info(e)
-    }
-        }
-    );
-    }catch(e){
-        console.info(e)
-    }
-});
-//收藏
+//获取收藏列表
 router.get('/follow', function(req, res, next){
     var proxy = new eventproxy();
     proxy.fail(next);
@@ -188,7 +133,7 @@ router.get('/follow', function(req, res, next){
         }
     );
 });
-//删除
+//删除收藏
 router.get('/follow/delete/:id', auth.userRequired, function(req, res, next){
     follow.getDeleteById(req.params.id, function(err, fol){
         if(err){
@@ -213,6 +158,119 @@ router.post('/follow', function(req, res, next){
             res.redirect("/follow");
         }
     ));
+});
+//根据标签获取对应文章列表
+router.get('/tags/:id', function(req, res, next){
+    var query = {},id;
+
+    var proxy = new eventproxy();
+    proxy.fail(next);
+
+    if(req.params.id){
+        id = validator.trim(req.params.id);
+        query = {}
+    } else {
+        proxy.emit('error');
+    }
+
+    var options = { sort: '-top -last_reply_at'};
+
+    article.getArticleByQuery(query, options, proxy.done('arts', function (topics) {
+        return topics;
+    }));
+
+    // article.getCountByQuery(query, proxy.done(function (all_topics_count) {
+    //     var pages = {
+    //         total   :  Math.ceil(all_topics_count / limit),
+    //         current :  page,
+    //         format  :  "/tags/%d"
+    //     }, paginatoHtml = "";
+    //     if(pages.total > 1){
+    //         paginatoHtml = paginator(pages)
+    //     }
+    //     proxy.emit('pages', paginatoHtml);
+    // }));
+
+    proxy.all('arts',
+        function(arts, pages){
+            navData.curIndex = 1;
+            res.render('list.html', {
+                articles : arts,
+                pages    : pages,
+                navData  : navData
+            });
+        }
+    );
+});
+//获取标签列表
+router.get('/tags', function(req, res, next){
+    var proxy = new eventproxy();
+    proxy.fail(next);
+    var options = {sort: '-top -create_at'};
+
+    tags.getTagsByQuery({deleted:false}, options, proxy.done("success"));
+
+    proxy.all('success',
+        function(tags){
+            console.info("tags.length = ",tags.length);
+            var index = tags.length-1;
+            for(index; index > -1; index--){
+                tags[index].style = creatNewTagStyle();
+            }
+            navData.curIndex = 2;
+            res.render('tags.html', {
+                pages    : "",
+                navData  : navData,
+                tags     : tags
+            });
+        }
+    );
+});
+//产生随机样式
+function creatNewTagStyle(){
+    var fontSizeArr = ["24px","22px","20px","14px"],
+        colorArr = ["#ccc","#666","#999"];
+
+    return "font-size:" + tools.random(fontSizeArr) + "; color:" + tools.random(colorArr) + ";";
+}
+// 创建标签
+router.get('/tags/create/:name', auth.userRequired, function(req, res, next){
+    var name = "",
+        folder = "",
+        description = "",
+        remarks = "";
+    
+    var proxy = new eventproxy();
+    proxy.fail(next);
+
+    if(req.params.name){
+        name = validator.trim(req.params.name);
+    } else {
+        proxy.emit('error');
+    }
+    // if(req.body.folder){
+    //     folder = validator.trim(req.body.folder);
+    // }
+    // if(req.body.description){
+    //     description = validator.trim(req.body.description);
+    // }
+    // if(req.body.remarks){
+    //     remarks = validator.trim(req.body.name);
+    // }
+
+    tags.newAndSave(name, folder, description, remarks, proxy.done("success"));
+
+    proxy.all('success',
+        function(tag){
+            console.info("follows.length = ",tag);
+            res.send({
+                code  : 200,
+                msg   : '新建成功',
+                tag    : tag
+            });
+        }
+    );
+
 });
 //关于
 router.get('/about', function(req, res, next){

@@ -71,6 +71,7 @@ console.info("env = ",app.get('env'));
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.info("......")
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,

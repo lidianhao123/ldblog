@@ -1,11 +1,15 @@
 <% layout('layout') -%>
 <div id="content" class="content">
   <section id="posts" class="posts-expand">
-    
+    <div class="tag-cloud">
+        <div class="tag-cloud-title">
+            目前共计 112 个标签
+        </div>
+        <div class="tag-cloud-tags">
+        <% tags.forEach(function(tag){ %>
+          <a href="/tags/<%= tag._id%>" target="_blank" style="<%= tag.style%>"><%= tag.name %></a>
+        <% }) %>
+        </div>
+      </div>
   </section>
 </div>
-<% if(pages !== ""){ %>
-<nav class="pagination">
-    <%- pages %>
-</nav>
-<% } %>

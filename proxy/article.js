@@ -37,7 +37,6 @@ exports.getArticle = function (id, callback) {
   Article.findOne({_id: id}, callback);
 };
 
-
 /**
  * 根据关键词，获取文章列表
  * Callback:
