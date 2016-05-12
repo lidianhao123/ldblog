@@ -24,7 +24,7 @@ var ArticleSchema = new Schema({
   content_is_html: { type: Boolean },
   tab: {type: String},
   deleted: {type: Boolean, default: false},
-  tags: [Schema.Types.ObjectId]
+  tags: [{id:Schema.Types.ObjectId,name:String}]
 });
 
 ArticleSchema.plugin(BaseModel);

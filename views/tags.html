@@ -3,11 +3,11 @@
   <section id="posts" class="posts-expand">
     <div class="tag-cloud">
         <div class="tag-cloud-title">
-            目前共计 112 个标签
+            目前共计 <%= length %> 个标签
         </div>
         <div class="tag-cloud-tags">
         <% tags.forEach(function(tag){ %>
-          <a href="/tags/<%= tag._id%>" target="_blank" style="<%= tag.style%>"><%= tag.name %></a>
+          <a href="/tags/<%= tag._id%>" target="_self" style="<%= tag.style%>"><%= tag.name %></a>
         <% }) %>
         </div>
       </div>

@@ -168,7 +168,7 @@ router.get('/tags/:id', function(req, res, next){
 
     if(req.params.id){
         id = validator.trim(req.params.id);
-        query = {}
+        query = {"tags.id":id};
     } else {
         proxy.emit('error');
     }
@@ -179,24 +179,17 @@ router.get('/tags/:id', function(req, res, next){
         return topics;
     }));
 
-    // article.getCountByQuery(query, proxy.done(function (all_topics_count) {
-    //     var pages = {
-    //         total   :  Math.ceil(all_topics_count / limit),
-    //         current :  page,
-    //         format  :  "/tags/%d"
-    //     }, paginatoHtml = "";
-    //     if(pages.total > 1){
-    //         paginatoHtml = paginator(pages)
-    //     }
-    //     proxy.emit('pages', paginatoHtml);
-    // }));
+    tags.getTagsByQuery({_id:id},proxy.done('tag'));
 
-    proxy.all('arts',
-        function(arts, pages){
-            navData.curIndex = 1;
+    proxy.all('arts','tag',
+        function(arts,tag){
+            console.info(tag);
+            var arr = [];
+            arr.push(tag[0].name+"共计"+arts.length+"篇文章");
+            navData.curIndex = 2
             res.render('list.html', {
-                articles : arts,
-                pages    : pages,
+                articles : arr.concat(arts),
+                // pages    : "",
                 navData  : navData
             });
         }
@@ -219,9 +212,28 @@ router.get('/tags', function(req, res, next){
             }
             navData.curIndex = 2;
             res.render('tags.html', {
-                pages    : "",
+                // pages    : "",
+                length   : tags.length,
                 navData  : navData,
                 tags     : tags
+            });
+        }
+    );
+});
+//获取标签列表信息json格式数据
+router.get('/tagslist', auth.userRequired, function(req, res, next){
+    var proxy = new eventproxy();
+    proxy.fail(next);
+    var options = {sort: '-top -create_at'};
+
+    tags.getTagsByQuery({deleted:false}, options, proxy.done("success"));
+    proxy.all('success',
+        function(tags){
+            console.info(tags);
+            res.send({
+                data:tags,
+                code:200,
+                msg: "获取标签列表成功"
             });
         }
     );
@@ -257,10 +269,23 @@ router.get('/tags/create/:name', auth.userRequired, function(req, res, next){
     // if(req.body.remarks){
     //     remarks = validator.trim(req.body.name);
     // }
+    var options = {sort: '-top -create_at'};
 
-    tags.newAndSave(name, folder, description, remarks, proxy.done("success"));
+    tags.getTagsByQuery({name:name}, options, proxy.done("query"));
 
-    proxy.all('success',
+    proxy.once("query", function(tag){
+        if (tag.length > 0) {//标签名称已存在
+            res.send({
+                code  : 201,
+                msg   : '标签名称已存在'
+                // tag    : tag
+            });
+        } else{
+            tags.newAndSave(name, folder, description, remarks, proxy.done("success"));
+        }
+    });
+
+    proxy.once('success',
         function(tag){
             console.info("follows.length = ",tag);
             res.send({
@@ -305,6 +330,7 @@ router.get('/article/:aid/edit', auth.userRequired, function(req, res, next) {
         if(err){
             return next(err);
         } else{
+            artic.tag = JSON.stringify(artic.tags);
             res.render('editArticle.html', {art: artic});
         }
     })
@@ -341,8 +367,14 @@ router.post('/article/:aid/edit', auth.userRequired, function(req, res, next) {
     var aid = req.params.aid,
         md = req.body.md,
         html = req.body.html,
-        title = validator.trim(req.body.title);
-        introduce = validator.trim(req.body.introduce);
+        title = validator.trim(req.body.title),
+        introduce = validator.trim(req.body.introduce),
+        tag = [];
+
+    if(req.body.tag){
+        tag = JSON.parse(req.body.tag);
+    }
+    console.log(tag);
 
     article.getArticle(aid, function(err, artic){
         if(err){
@@ -354,13 +386,20 @@ router.post('/article/:aid/edit', auth.userRequired, function(req, res, next) {
             artic.title = title;
             artic.introduce = introduce;
             artic.update_at = new Date();
+            artic.tags = tag;
 
             artic.save(function(err){
                 if (err) {
                     return next(err);
                 }
 
-                res.redirect('/article/' + aid);
+                var result = {
+                    code      : 200,
+                    msg       : '修改成功',
+                    id        : article._id
+                }
+                res.send(result);
+                // res.redirect('/article/' + aid);
             });
         }
     })
