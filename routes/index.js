@@ -407,7 +407,6 @@ router.post('/article/:aid/edit', auth.userRequired, function(req, res, next) {
 });
 
 router.post('/upload', auth.userRequired, function(req, res, next) {
-    console.info(req);
     req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
       store.upload(file, {filename: filename}, function (err, result) {
         if (err) {
@@ -427,7 +426,6 @@ router.post('/upload', auth.userRequired, function(req, res, next) {
 });
 //党建云平台使用
 router.post('/uploadimg', function(req, res, next) {
-    console.info(req);
     req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
       store.upload(file, {filename: filename}, function (err, result) {
         if (err) {
