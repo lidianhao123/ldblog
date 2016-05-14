@@ -427,6 +427,7 @@ router.post('/upload', auth.userRequired, function(req, res, next) {
 //党建云平台使用
 router.post('/uploadimg', function(req, res, next) {
     req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+        try{
         store.upload(file, {filename: filename}, function (err, result) {
             console.info("store.upload")
             if (err) {
@@ -442,6 +443,9 @@ router.post('/uploadimg', function(req, res, next) {
                 name    : "丁丁历险记"
             });
         });
+        }catch(e){
+            console.info(e);
+        }
     });
 
     req.pipe(req.busboy);
