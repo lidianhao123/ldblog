@@ -3,6 +3,8 @@
 
 node_modules
 
+public/upload
+
 self-file/
 
 /config_pro.js

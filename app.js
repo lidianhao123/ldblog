@@ -14,6 +14,7 @@ var users = require('./routes/users');
 var config = require('./config')
 var auth = require('./middlewares/auth');
 var _ = require('lodash');
+var cors = require('cors');
 
 var app = express();
 
@@ -53,6 +54,8 @@ app.use(busboy({
     fileSize: 10 * 1024 * 1024 // 10MB
   }
 }));
+
+app.use(cors());
 
 app.use('/', routes);
 app.use('/users', users);
