@@ -28,8 +28,8 @@ exports.upload2 = function (file, options, callback) {
   var newFilename = utility.md5(filename + String((new Date()).getTime())) +
     path.extname(filename);
 
-  var upload_path = config.upload.path+"2";
-  var base_url    = config.upload.url;
+  var upload_path = path.join(__dirname, '../public/upload2/');
+  var base_url    = "/upload2/";
   var filePath    = path.join(upload_path, newFilename);
   var fileUrl     = base_url + newFilename;
 
