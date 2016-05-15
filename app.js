@@ -67,6 +67,7 @@ app.all('*',function (req, res, next) {
   } else {
     next();
   }
+  console.info("app.alll");
 });
 
 app.use('/', routes);
@@ -99,6 +100,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
+  console.info("=========");
   res.render('error', {
     message: err.message,
     error: {}
