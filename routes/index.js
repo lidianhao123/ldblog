@@ -424,6 +424,13 @@ router.post('/upload', auth.userRequired, function(req, res, next) {
 
     req.pipe(req.busboy);
 });
+router.options('/uploadimg',function(req, res, next){
+    console.info("12121212");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    res.sendStatus(200); /*让options请求快速返回*/
+});
 //党建云平台使用
 router.post('/uploadimg', function(req, res, next) {
     console.info("uploadimg")
@@ -432,9 +439,9 @@ router.post('/uploadimg', function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
-    if (req.method == 'OPTIONS') {
-        res.sendStatus(200); /*让options请求快速返回*/
-    } else {
+    // if (req.method == 'OPTIONS') {
+    //     res.sendStatus(200); /*让options请求快速返回*/
+    // } else {
         req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
             try{
             store.upload2(file, {filename: filename}, function (err, result) {
@@ -458,7 +465,7 @@ router.post('/uploadimg', function(req, res, next) {
         });
 
         req.pipe(req.busboy);
-    }
+    // }
 });
 
 module.exports = router;
