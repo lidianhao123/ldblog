@@ -427,30 +427,38 @@ router.post('/upload', auth.userRequired, function(req, res, next) {
 //党建云平台使用
 router.post('/uploadimg', function(req, res, next) {
     console.info("uploadimg")
-    req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-        try{
-        store.upload2(file, {filename: filename}, function (err, result) {
-            console.info("store.upload",err)
-            if (err) {
-              return next(err);
-            }
-            res.json({
-                // success: true,
-                // url: result.url,
-                success : 1,           // 0 表示上传失败，1 表示上传成功
-                message : "提示的信息，上传成功或上传失败及错误信息等。",
-                url     : result.url,        // 上传成功时才返回
-                id      : result.url,
-                name    : "丁丁历险记"
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+
+    if (req.method == 'OPTIONS') {
+        res.sendStatus(200); /*让options请求快速返回*/
+    } else {
+        req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+            try{
+            store.upload2(file, {filename: filename}, function (err, result) {
+                console.info("store.upload",err)
+                if (err) {
+                  return next(err);
+                }
+                res.json({
+                    // success: true,
+                    // url: result.url,
+                    success : 1,           // 0 表示上传失败，1 表示上传成功
+                    message : "提示的信息，上传成功或上传失败及错误信息等。",
+                    url     : result.url,        // 上传成功时才返回
+                    id      : result.url,
+                    name    : "丁丁历险记"
+                });
             });
+            }catch(e){
+                console.info(e);
+            }
         });
-        }catch(e){
-            console.info(e);
-        }
-    });
 
-    req.pipe(req.busboy);
-
+        req.pipe(req.busboy);
+    }
 });
 
 module.exports = router;
