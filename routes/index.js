@@ -430,7 +430,7 @@ router.post('/uploadimg', function(req, res, next) {
     req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
         try{
         store.upload2(file, {filename: filename}, function (err, result) {
-            console.info("store.upload")
+            console.info("store.upload",err)
             if (err) {
               return next(err);
             }
