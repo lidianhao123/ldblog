@@ -69,7 +69,10 @@
     <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/editor.md/editormd.js"></script>
     <script type="text/javascript">
-        var oldtags = <%- art.tag%>;
+        var oldtags = []
+        <% if (typeof(art) !== 'undefined') {%>
+            oldtags =  <%- art.tag%>;
+        <%} %>
     </script>
     <script type="text/javascript">            
         var testEditor;
