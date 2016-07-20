@@ -5,13 +5,13 @@ var Article      = models.Article;
 var tools      = require('../common/tools');
 var _          = require('lodash');
 
-exports.newAndSave = function (title, md, html, introduce, callback) {
+exports.newAndSave = function (title, md, html, introduce, tab, callback) {
   var article       = new Article();
   article.title     = title;
   article.md        = md;
   article.html      = html;
   article.introduce = introduce;
-  // article.tab       = tab;
+  article.tab       = tab;
   // article.author_id = authorId;
 
   article.save(callback);

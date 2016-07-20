@@ -344,8 +344,13 @@ router.post('/article/create', auth.userRequired, function(req, res, next) {
         html = validator.trim(req.body.html),
         title = validator.trim(req.body.title);
         introduce = validator.trim(req.body.introduce);
+        tag = [];
 
-    article.newAndSave(title, md, html, introduce, function(err, article){
+    if(req.body.tag){
+        tag = JSON.parse(req.body.tag);
+    }
+
+    article.newAndSave(title, md, html, introduce, tag, function(err, article){
         if(err){
             // var result = {
             //     code      : 500,
