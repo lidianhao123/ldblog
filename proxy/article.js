@@ -11,7 +11,7 @@ exports.newAndSave = function (title, md, html, introduce, tab, callback) {
   article.md        = md;
   article.html      = html;
   article.introduce = introduce;
-  article.tab       = tab;
+  article.tags       = tab;
   // article.author_id = authorId;
 
   article.save(callback);
