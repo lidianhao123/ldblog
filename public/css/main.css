@@ -44,7 +44,7 @@ a{text-decoration: none; color:#555;}
 @media (max-width: 767px) {
   .header-inner {position: relative; width: auto; }
 }
-.site-meta {margin: 0; text-align: center; padding: 20px 0; color: #fff; background: #222; height: 75px;}
+.site-meta {margin: 0; text-align: center; padding: 20px 0; color: #fff; background: #000; height: 75px;}
 @media (min-width: 768px) and (max-width: 991px) {
   .site-meta {box-shadow: 0 0 16px rgba(0,0,0,0.5); }
 }
