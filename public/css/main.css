@@ -44,7 +44,7 @@ a{text-decoration: none; color:#555;}
 @media (max-width: 767px) {
   .header-inner {position: relative; width: auto; }
 }
-.site-meta {margin: 0; text-align: center; padding: 20px 0; color: #fff; background: #222; }
+.site-meta {margin: 0; text-align: center; padding: 20px 0; color: #fff; background: #222; height: 75px;}
 @media (min-width: 768px) and (max-width: 991px) {
   .site-meta {box-shadow: 0 0 16px rgba(0,0,0,0.5); }
 }
@@ -53,7 +53,8 @@ a{text-decoration: none; color:#555;}
 }
 .brand {position: relative; display: inline-block; padding: 0 40px; color: #fff; background: #222; border-bottom: none; }
 .brand:hover {color: #fff; }
-.logo {display: inline-block; margin-right: 5px; line-height: 36px; vertical-align: top; }
+/*.logo {display: inline-block; margin-right: 5px; line-height: 36px; vertical-align: top; }*/
+.logo{display: block; margin: 0 auto;}
 .site-title {display: inline-block; vertical-align: top; line-height: 36px; font-size: 24px; font-weight: normal; font-family: 'Lobster Two', 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif; }
 .site-subtitle {margin-top: 0; font-size: 13px; color: #ddd; }
 .site-nav-toggle {display: none; position: absolute; top: 20px; left: 20px; }
