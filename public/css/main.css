@@ -27,7 +27,7 @@ a{text-decoration: none; color:#555;}
 .headband {height: 3px; background: #222; }
 /*顶部黑线 end*/
 /*大标题及左侧导航栏 start*/
-.header {position: relative; margin: 0 auto; width: 960px; background: #fff; }
+.header {position: relative; margin: 0 auto; width: 1200px; background: #fff; }
 @media (min-width: 768px) and (max-width: 991px) {
   .header {width: auto; }
 }
@@ -93,8 +93,8 @@ a{text-decoration: none; color:#555;}
 .main:before, 
 .main:after {content: " "; display: table; }
 .main:after {clear: both; }
-.container .main-inner {margin: 0 auto; width: 960px; }
-.content-wrap {float: right; box-sizing: border-box; padding: 40px; width: 700px; background: #fff; min-height: 700px; }
+.container .main-inner {margin: 0 auto; width: 1200px; }
+.content-wrap {float: right; box-sizing: border-box; padding: 40px; width: 940px; background: #fff; min-height: 700px; }
 .posts-expand {padding-top: 40px; }
 .posts-expand .post-title {font-size: 26px; text-align: left; word-break: break-word; font-weight: 300; }
 .posts-expand .post-meta {margin: 3px 0 20px 0; color: #999; font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 12px; text-align: left;}
